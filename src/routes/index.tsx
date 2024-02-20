@@ -1,4 +1,4 @@
-import { createAsync, redirect } from "@solidjs/router"
+import { cache, createAsync, redirect } from "@solidjs/router"
 
 const FORCE_REDIRECT = true
 
@@ -9,8 +9,10 @@ async function getData() {
 	return { id: "abc123" }
 }
 
+const cachedGetData = cache(getData, "data")
+
 export default function App() {
-	const item = createAsync(() => getData())
+	const item = createAsync(() => cachedGetData())
 
 	return (
 		<main>
